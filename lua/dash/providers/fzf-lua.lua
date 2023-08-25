@@ -46,7 +46,7 @@ M.dash = function(opts)
   -- This gets called whenever input is changed
   -- Also gets called first run if `opts.exec_empty_query == true`
   local current_file_type = vim.bo.filetype
-  opts._reload_action = function(query)
+  fzf_lua.fzf_live(function(query)
     if not query or #query == 0 then
       return {}
     end
@@ -61,11 +61,7 @@ M.dash = function(opts)
       table.insert(items, item.display)
     end
     return items
-  end
-
-  -- This sets all the required fzf arguments for `change:reload` callbacks
-  opts = fzf_lua.core.set_fzf_interactive_cb(opts)
-  fzf_lua.core.fzf_files(opts)
+  end, opts)
 end
 
 return M
